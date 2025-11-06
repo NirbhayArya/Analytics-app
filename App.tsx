@@ -9,6 +9,7 @@ import ReportsPage from './pages/ReportsPage.tsx';
 // FIX: Add '.tsx' extension to import for consistency and to prevent module resolution issues.
 import SettingsPage from './pages/SettingsPage.tsx';
 import Loader from './components/Loader';
+import LoginPage from './pages/LoginPage';
 
 // Theme context
 type Theme = 'light' | 'dark';
@@ -28,11 +29,16 @@ const App: React.FC = () => {
   const [theme, setTheme] = useState<Theme>('dark');
   const [currentPage, setCurrentPage] = useState('Dashboard');
   const [isLoading, setIsLoading] = useState(true);
+  const [isAuthenticated, setIsAuthenticated] = useState(false);
 
   useEffect(() => {
     const storedTheme = localStorage.getItem('theme') as Theme | null;
     if (storedTheme) {
       setTheme(storedTheme);
+    }
+    const sessionAuth = sessionStorage.getItem('isAuthenticated');
+    if (sessionAuth === 'true') {
+        setIsAuthenticated(true);
     }
   }, []);
 
@@ -52,6 +58,16 @@ const App: React.FC = () => {
 
   const toggleTheme = () => {
     setTheme(prevTheme => (prevTheme === 'light' ? 'dark' : 'light'));
+  };
+
+  const handleLogin = () => {
+    setIsAuthenticated(true);
+    sessionStorage.setItem('isAuthenticated', 'true');
+  };
+
+  const handleLogout = () => {
+    setIsAuthenticated(false);
+    sessionStorage.removeItem('isAuthenticated');
   };
 
   const renderPage = (): ReactNode => {
@@ -75,15 +91,19 @@ const App: React.FC = () => {
 
   return (
     <ThemeContext.Provider value={{ theme, toggleTheme }}>
-      <div className="flex h-screen bg-light-bg dark:bg-dark-bg text-light-text dark:text-dark-text">
-        <Sidebar currentPage={currentPage} setCurrentPage={setCurrentPage} />
-        <div className="flex-1 flex flex-col overflow-hidden">
-          <Header currentPage={currentPage} />
-          <main className="flex-1 overflow-x-hidden overflow-y-auto bg-light-bg dark:bg-dark-bg p-6">
-            {renderPage()}
-          </main>
+      {!isAuthenticated ? (
+        <LoginPage onLogin={handleLogin} />
+      ) : (
+        <div className="flex h-screen bg-light-bg dark:bg-dark-bg text-light-text dark:text-dark-text">
+          <Sidebar currentPage={currentPage} setCurrentPage={setCurrentPage} />
+          <div className="flex-1 flex flex-col overflow-hidden">
+            <Header currentPage={currentPage} onLogout={handleLogout} />
+            <main className="flex-1 overflow-x-hidden overflow-y-auto bg-light-bg dark:bg-dark-bg p-6">
+              {renderPage()}
+            </main>
+          </div>
         </div>
-      </div>
+      )}
     </ThemeContext.Provider>
   );
 };

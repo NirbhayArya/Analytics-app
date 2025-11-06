@@ -1,11 +1,21 @@
+
 import React from 'react';
 import { motion, Variants } from 'framer-motion';
 import { PieChart, Pie, Cell, Tooltip, Legend, ResponsiveContainer } from 'recharts';
 import { EngagementChart, TrafficSourceChart, TechChart, RetentionChart } from '../components/Charts';
-import { engagementData, trafficSourceData, frontendTechData, backendTechData, retentionData, demographicsData, topReferrers, contentPerformance, siteSpeedMetrics } from '../constants';
 import { DemographicsData, ReferrerData, ContentPerformanceData, SiteSpeedMetric } from '../types';
 import { LightningBoltIcon, SpeedometerIcon, LinkIcon } from '../components/Icons';
-
+import {
+    siteSpeedMetrics,
+    engagementData,
+    trafficSourceData,
+    demographicsData,
+    contentPerformance,
+    retentionData,
+    frontendTechData,
+    backendTechData,
+    topReferrers
+} from '../data';
 
 const itemVariants: Variants = {
   hidden: { y: 20, opacity: 0 },
@@ -128,39 +138,39 @@ const ContentPerformance: React.FC<{data: ContentPerformanceData[]}> = ({data}) 
 
 
 const AnalyticsPage: React.FC = () => {
-  return (
-    <motion.div
-      initial="hidden"
-      animate="visible"
-      variants={{ visible: { transition: { staggerChildren: 0.1 } } }}
-      className="space-y-6"
-    >
-      <div className="grid grid-cols-1 lg:grid-cols-3 gap-6">
-        <AnimatedSection className="lg:col-span-1"><RealtimeOverview /></AnimatedSection>
-        <AnimatedSection className="lg:col-span-2"><SiteSpeed metrics={siteSpeedMetrics} /></AnimatedSection>
-      </div>
+    return (
+        <motion.div
+            initial="hidden"
+            animate="visible"
+            variants={{ visible: { transition: { staggerChildren: 0.1 } } }}
+            className="space-y-6"
+        >
+            <div className="grid grid-cols-1 lg:grid-cols-3 gap-6">
+                <AnimatedSection className="lg:col-span-1"><RealtimeOverview /></AnimatedSection>
+                <AnimatedSection className="lg:col-span-2"><SiteSpeed metrics={siteSpeedMetrics} /></AnimatedSection>
+            </div>
 
-      <div className="grid grid-cols-1 lg:grid-cols-2 gap-6">
-        <AnimatedSection><EngagementChart data={engagementData} /></AnimatedSection>
-        <AnimatedSection><TrafficSourceChart data={trafficSourceData} /></AnimatedSection>
-      </div>
+            <div className="grid grid-cols-1 lg:grid-cols-2 gap-6">
+                <AnimatedSection><EngagementChart data={engagementData} /></AnimatedSection>
+                <AnimatedSection><TrafficSourceChart data={trafficSourceData} /></AnimatedSection>
+            </div>
 
-      <div className="grid grid-cols-1 lg:grid-cols-3 gap-6">
-          <AnimatedSection><UserDemographics data={demographicsData} /></AnimatedSection>
-          <AnimatedSection className="lg:col-span-2"><ContentPerformance data={contentPerformance} /></AnimatedSection>
-      </div>
+            <div className="grid grid-cols-1 lg:grid-cols-3 gap-6">
+                <AnimatedSection><UserDemographics data={demographicsData} /></AnimatedSection>
+                <AnimatedSection className="lg:col-span-2"><ContentPerformance data={contentPerformance} /></AnimatedSection>
+            </div>
 
-      <AnimatedSection><RetentionChart data={retentionData} /></AnimatedSection>
-      
-      <div className="grid grid-cols-1 lg:grid-cols-2 gap-6">
-        <AnimatedSection><TechChart data={frontendTechData} title="Frontend Technologies" /></AnimatedSection>
-        <AnimatedSection><TechChart data={backendTechData} title="Backend Technologies" /></AnimatedSection>
-      </div>
-      
-       <AnimatedSection><TopReferrers data={topReferrers} /></AnimatedSection>
+            <AnimatedSection><RetentionChart data={retentionData} /></AnimatedSection>
+            
+            <div className="grid grid-cols-1 lg:grid-cols-2 gap-6">
+                <AnimatedSection><TechChart data={frontendTechData} title="Frontend Technologies" /></AnimatedSection>
+                <AnimatedSection><TechChart data={backendTechData} title="Backend Technologies" /></AnimatedSection>
+            </div>
+            
+            <AnimatedSection><TopReferrers data={topReferrers} /></AnimatedSection>
 
-    </motion.div>
-  );
+        </motion.div>
+    );
 };
 
 export default AnalyticsPage;

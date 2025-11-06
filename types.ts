@@ -56,10 +56,12 @@ export interface TopPerformer {
     change: number;
 }
 
+// FIX: Added an index signature to conform to the data type expected by the Recharts Pie component.
 export interface MarketShareData {
     name: string;
     value: number;
     color: string;
+    [key: string]: any;
 }
 
 export interface FunnelStep {
@@ -74,16 +76,20 @@ export interface EngagementData {
     pv: number;
 }
 
+// FIX: Added an index signature to conform to the data type expected by the Recharts Pie component.
 export interface TrafficSourceData {
     name: string;
     value: number;
     color: string;
+    [key: string]: any;
 }
 
+// FIX: Added an index signature to conform to the data type expected by the Recharts Pie component.
 export interface DemographicsData {
     name: string;
     value: number;
     color: string;
+    [key: string]: any;
 }
 
 export interface ReferrerData {
@@ -104,10 +110,12 @@ export interface SiteSpeedMetric {
     rating: 'good' | 'average' | 'poor';
 }
 
+// FIX: Added an index signature to conform to the data type expected by the Recharts Pie component.
 export interface TechData {
     name: string;
     value: number;
     color: string;
+    [key: string]: any;
 }
 
 export interface RetentionData {

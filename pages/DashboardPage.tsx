@@ -1,12 +1,25 @@
+
 import React from 'react';
 import { motion, Variants } from 'framer-motion';
-import { Cell, BarChart, Bar, XAxis, YAxis, Tooltip, Legend, ResponsiveContainer } from 'recharts';
+import { Cell, BarChart, Bar, XAxis, YAxis, Tooltip, ResponsiveContainer } from 'recharts';
 import KpiCards from '../components/KpiCards';
 import { RevenueChart, PerformanceChart, MarketShareChart, SalesFunnelChart } from '../components/Charts';
 import DataTable from '../components/DataTable';
-import { kpiData, revenueData, performanceData, marketShareData, salesFunnelData, recentTransactions, quickActions, recentActivities, csatData, geoData, topPerformers } from '../constants';
+import { quickActions } from '../constants';
 import { QuickAction, Activity, CSATData, GeoData, TopPerformer } from '../types';
 import { MapIcon, ArrowTrendingUpIcon } from '../components/Icons';
+import {
+    kpiData,
+    revenueData,
+    performanceData,
+    recentTransactions,
+    recentActivities,
+    csatData,
+    marketShareData,
+    salesFunnelData,
+    geoData,
+    topPerformers
+} from '../data';
 
 
 const containerVariants: Variants = {
@@ -152,45 +165,45 @@ const TopPerformers: React.FC<{ performers: TopPerformer[] }> = ({ performers })
 
 
 const DashboardPage: React.FC = () => {
-  return (
-    <motion.div 
-      initial="hidden"
-      animate="visible"
-      variants={containerVariants}
-      className="space-y-6"
-    >
-      <motion.div variants={itemVariants}><KpiCards kpiData={kpiData} /></motion.div>
-      
-      <div className="grid grid-cols-1 lg:grid-cols-3 gap-6">
-        <AnimatedSection className="lg:col-span-2"><RevenueChart data={revenueData} /></AnimatedSection>
-        <AnimatedSection><PerformanceChart data={performanceData} /></AnimatedSection>
-      </div>
+    return (
+        <motion.div 
+            initial="hidden"
+            animate="visible"
+            variants={containerVariants}
+            className="space-y-6"
+        >
+            <motion.div variants={itemVariants}><KpiCards kpiData={kpiData} /></motion.div>
+            
+            <div className="grid grid-cols-1 lg:grid-cols-3 gap-6">
+                <AnimatedSection className="lg:col-span-2"><RevenueChart data={revenueData} /></AnimatedSection>
+                <AnimatedSection><PerformanceChart data={performanceData} /></AnimatedSection>
+            </div>
 
-      <div className="grid grid-cols-1 lg:grid-cols-2 xl:grid-cols-3 gap-6">
-        <AnimatedSection className="xl:col-span-2">
-            <DataTable data={recentTransactions} />
-        </AnimatedSection>
-        <AnimatedSection>
-            <RecentActivity activities={recentActivities} />
-        </AnimatedSection>
-      </div>
+            <div className="grid grid-cols-1 lg:grid-cols-2 xl:grid-cols-3 gap-6">
+                <AnimatedSection className="xl:col-span-2">
+                    <DataTable data={recentTransactions} />
+                </AnimatedSection>
+                <AnimatedSection>
+                    <RecentActivity activities={recentActivities} />
+                </AnimatedSection>
+            </div>
 
-       <div className="grid grid-cols-1 lg:grid-cols-3 gap-6">
-         <AnimatedSection><CustomerSatisfaction data={csatData} /></AnimatedSection>
-         <AnimatedSection><MarketShareChart data={marketShareData} /></AnimatedSection>
-         <AnimatedSection><SalesFunnelChart data={salesFunnelData} /></AnimatedSection>
-      </div>
-      
-       <div className="grid grid-cols-1 lg:grid-cols-2 gap-6">
-        <AnimatedSection><GeographicPerformance data={geoData} /></AnimatedSection>
-        <AnimatedSection><TopPerformers performers={topPerformers} /></AnimatedSection>
-      </div>
+            <div className="grid grid-cols-1 lg:grid-cols-3 gap-6">
+                <AnimatedSection><CustomerSatisfaction data={csatData} /></AnimatedSection>
+                <AnimatedSection><MarketShareChart data={marketShareData} /></AnimatedSection>
+                <AnimatedSection><SalesFunnelChart data={salesFunnelData} /></AnimatedSection>
+            </div>
+            
+            <div className="grid grid-cols-1 lg:grid-cols-2 gap-6">
+                <AnimatedSection><GeographicPerformance data={geoData} /></AnimatedSection>
+                <AnimatedSection><TopPerformers performers={topPerformers} /></AnimatedSection>
+            </div>
 
-      <AnimatedSection>
-        <QuickActions actions={quickActions}/>
-      </AnimatedSection>
-    </motion.div>
-  );
+            <AnimatedSection>
+                <QuickActions actions={quickActions}/>
+            </AnimatedSection>
+        </motion.div>
+    );
 };
 
 export default DashboardPage;

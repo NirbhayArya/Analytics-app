@@ -1,13 +1,14 @@
 
 import React from 'react';
 import ThemeToggle from './ThemeToggle';
-import { BellIcon, UserCircleIcon } from './Icons';
+import { BellIcon, LogoutIcon } from './Icons';
 
 interface HeaderProps {
   currentPage: string;
+  onLogout: () => void;
 }
 
-const Header: React.FC<HeaderProps> = ({ currentPage }) => {
+const Header: React.FC<HeaderProps> = ({ currentPage, onLogout }) => {
   return (
     <header className="h-20 bg-light-header dark:bg-dark-header flex items-center justify-between px-6 border-b border-gray-200 dark:border-gray-700 flex-shrink-0">
       <h1 className="text-2xl font-semibold text-gray-800 dark:text-white">{currentPage}</h1>
@@ -26,7 +27,7 @@ const Header: React.FC<HeaderProps> = ({ currentPage }) => {
 
         <ThemeToggle />
 
-        <button className="relative p-2 rounded-full hover:bg-gray-200 dark:hover:bg-gray-700">
+        <button className="relative p-2 rounded-full hover:bg-gray-200 dark:hover:bg-gray-700" aria-label="Notifications">
           <BellIcon className="w-6 h-6 text-gray-600 dark:text-gray-300" />
           <span className="absolute top-1 right-1 block h-2.5 w-2.5 rounded-full bg-red-500 border-2 border-light-header dark:border-dark-header"></span>
         </button>
@@ -38,6 +39,10 @@ const Header: React.FC<HeaderProps> = ({ currentPage }) => {
             <p className="text-xs text-gray-500">Admin</p>
           </div>
         </div>
+
+        <button onClick={onLogout} className="p-2 rounded-full hover:bg-gray-200 dark:hover:bg-gray-700" aria-label="Logout">
+            <LogoutIcon className="w-6 h-6 text-gray-600 dark:text-gray-300"/>
+        </button>
       </div>
     </header>
   );

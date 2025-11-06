@@ -1,8 +1,9 @@
+
 import React from 'react';
 import { motion, Variants } from 'framer-motion';
 import { DocumentReportIcon, DocumentDownloadIcon, ClockIcon, ShieldCheckIcon, TemplateIcon } from '../components/Icons';
-import { recentReports, scheduledReports, auditLog } from '../constants';
 import { RecentReport, ScheduledReport, AuditLogEntry } from '../types';
+import { recentReports, scheduledReports, auditLog } from '../data';
 
 
 const itemVariants: Variants = {
@@ -145,36 +146,36 @@ const AuditLog: React.FC<{ log: AuditLogEntry[] }> = ({ log }) => (
 
 
 const ReportsPage: React.FC = () => {
-  return (
-    <motion.div
-      initial="hidden"
-      animate="visible"
-      variants={{ visible: { transition: { staggerChildren: 0.1 } } }}
-      className="space-y-6"
-    >
-      <AnimatedSection>
-        <ReportGenerator />
-      </AnimatedSection>
-      
-      <div className="grid grid-cols-1 lg:grid-cols-2 gap-6">
-        <AnimatedSection>
-            <RecentReports reports={recentReports} />
-        </AnimatedSection>
-        <AnimatedSection>
-            <ScheduledReports reports={scheduledReports} />
-        </AnimatedSection>
-      </div>
+    return (
+        <motion.div
+            initial="hidden"
+            animate="visible"
+            variants={{ visible: { transition: { staggerChildren: 0.1 } } }}
+            className="space-y-6"
+        >
+            <AnimatedSection>
+                <ReportGenerator />
+            </AnimatedSection>
+            
+            <div className="grid grid-cols-1 lg:grid-cols-2 gap-6">
+                <AnimatedSection>
+                    <RecentReports reports={recentReports} />
+                </AnimatedSection>
+                <AnimatedSection>
+                    <ScheduledReports reports={scheduledReports} />
+                </AnimatedSection>
+            </div>
 
-       <div className="grid grid-cols-1 lg:grid-cols-2 gap-6">
-            <AnimatedSection><ReportTemplates /></AnimatedSection>
-            <AnimatedSection><ExportCenter /></AnimatedSection>
-       </div>
-       
-      <AnimatedSection>
-        <AuditLog log={auditLog} />
-      </AnimatedSection>
-    </motion.div>
-  );
+            <div className="grid grid-cols-1 lg:grid-cols-2 gap-6">
+                    <AnimatedSection><ReportTemplates /></AnimatedSection>
+                    <AnimatedSection><ExportCenter /></AnimatedSection>
+            </div>
+            
+            <AnimatedSection>
+                <AuditLog log={auditLog} />
+            </AnimatedSection>
+        </motion.div>
+    );
 };
 
 export default ReportsPage;

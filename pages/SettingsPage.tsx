@@ -1,9 +1,9 @@
 
-import React from 'react';
+import React, { useState } from 'react';
 import { motion } from 'framer-motion';
-import { teamMembers } from '../constants';
 import { TeamMember } from '../types';
 import { UserCircleIcon, CreditCardIcon, BellIcon, ShieldCheckIcon } from '../components/Icons';
+import { teamMembers } from '../data';
 
 const settingsTabs = [
     { name: 'Profile', icon: UserCircleIcon },
@@ -51,7 +51,21 @@ const TeamMembersTable: React.FC<{ data: TeamMember[] }> = ({ data }) => (
 );
 
 const SettingsPage: React.FC = () => {
-    const [activeTab, setActiveTab] = React.useState('Profile');
+    const [activeTab, setActiveTab] = useState('Profile');
+
+    const renderContent = () => {
+        switch (activeTab) {
+            case 'Profile':
+                return <TeamMembersTable data={teamMembers} />;
+            default:
+                return (
+                    <div className="bg-light-card dark:bg-dark-card p-6 rounded-xl shadow-sm text-center">
+                        <h3 className="text-xl font-semibold">{activeTab} Settings</h3>
+                        <p className="mt-2 text-gray-500">Content for this section is not yet implemented.</p>
+                    </div>
+                );
+        }
+    };
 
     return (
         <motion.div initial={{ opacity: 0 }} animate={{ opacity: 1 }} transition={{ duration: 0.5 }}>
@@ -72,16 +86,7 @@ const SettingsPage: React.FC = () => {
                 ))}
             </div>
 
-            <div>
-                {activeTab === 'Profile' && <TeamMembersTable data={teamMembers} />}
-                {/* Other tabs would have their own components */}
-                 {activeTab !== 'Profile' && (
-                    <div className="bg-light-card dark:bg-dark-card p-6 rounded-xl shadow-sm text-center">
-                        <h3 className="text-xl font-semibold">{activeTab} Settings</h3>
-                        <p className="mt-2 text-gray-500">Content for this section is not yet implemented.</p>
-                    </div>
-                )}
-            </div>
+            <div>{renderContent()}</div>
 
         </motion.div>
     );
